@@ -1,4 +1,5 @@
 // DEPENDENCIES
+const cors = require('cors')
 const express = require('express')
 const app = express()
 
@@ -6,10 +7,11 @@ const app = express()
 require('dotenv').config()
 app.use(express.json())
 app.use(express.urlencoded({extended: true}))
+app.use(cors())
 
 // ROOT
 app.get('/', (req, res) => {
-    res.send('myBonsai homepage stub')
+    res.json('myBonsai homepage stub')
 })
 
 // CONTROLLERS
@@ -17,4 +19,4 @@ app.get('/', (req, res) => {
 // LISTEN
 app.listen(process.env.PORT, () => {
     console.log(`Listening on port ${process.env.PORT}`)
-})
+})  
