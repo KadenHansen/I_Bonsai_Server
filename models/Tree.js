@@ -1,12 +1,12 @@
 const mongoose = require('mongoose')
 const { Schema } = mongoose
-import Event from './Event'
+// import Event from './Event'
 
 const treeSchema = new Schema({
-    Name: {type: string, required:true},
-    Age: {type: number},
-    Species: {type: string},
-    Style: {type: string},
+    Name: {type: String, required:true},
+    Age: {type: Number},
+    Species: {type: String},
+    Style: {type: String},
     Events: []
 })
 
