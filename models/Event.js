@@ -2,10 +2,10 @@ const mongoose = require('mongoose')
 const { Schema } = mongoose
 
 const eventSchema = new Schema({
-    Description: {type: string},
-    DatePotted: {type: date},
-    Image:{type:image||string},
-    Notes:{type:string}
+    Description: {type: String},
+    DatePotted: {type: Date},
+    Image:{type: String},
+    Notes:{type: String}
 })
 
 const Event = mongoose.model('Event', eventSchema)
