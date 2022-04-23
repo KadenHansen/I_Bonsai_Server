@@ -15,6 +15,7 @@ app.get('/', (req, res) => {
 })
 
 // CONTROLLERS
+app.use("/inventory", require("./controllers/inventory"))
 
 // LISTEN
 app.listen(process.env.PORT, () => {
