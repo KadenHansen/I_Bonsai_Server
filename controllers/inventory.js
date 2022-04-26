@@ -9,8 +9,8 @@ router.get('/', async (req, res) => {
 })
 
 //  show tree by id
-router.get('/:id', async (req, res) => {
-    const trees = await db.Tree.findById({})
+router.get('/:treeId', async (req, res) => {
+    const trees = await db.Tree.findById(req.params.treeId)
     res.json(trees)
 })
 // POST ROUTES
