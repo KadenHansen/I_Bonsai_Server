@@ -15,13 +15,22 @@ router.get('/:treeId', async (req, res) => {
 })
 // POST ROUTES
 // add tree card
-router.post('/:id', async (req, res) => {
-    const treeCard = new TreeCard(req.body);
-    try {
-        await treeCard.save();
-        res.status(201).send(treeCard)
+router.post('/', async (req, res) => {
+    const tree = req.body;
+   
+    try { 
+        await db.Tree.create({
+            Name: `${req.body.Name}`,   
+            Age: `${req.body.Age}`,
+            Species: `${req.body.Species}`,
+            Style: `${req.body.Style}`,
+            Events: []
+        })
+            .then(res.status(200).redirect('/'))
+        // await treeCard.save();
+        // res.status(201).send(treeCard)
     } catch (error) {
-        req.status(500).send(error)
+        res.status(500).send(error)
     }
 })
 // add event to tree
