@@ -26,6 +26,7 @@ router.post('/', async (req, res) => {
             Style: `${req.body.Style}`,
             Events: []
         })
+            .then(console.log(req.body))
             .then(res.status(200).redirect('/'))
         // await treeCard.save();
         // res.status(201).send(treeCard)
