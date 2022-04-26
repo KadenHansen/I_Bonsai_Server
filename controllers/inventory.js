@@ -2,6 +2,7 @@ const router = require('express').Router()
 const db = require('../models')
 
 // SHOW ROUTES
+
 // show all trees
 router.get('/', async (req, res) => {
     const trees = await db.Tree.find({})
@@ -14,6 +15,7 @@ router.get('/:treeId', async (req, res) => {
     res.json(trees)
 })
 // POST ROUTES
+
 // add tree card
 router.post('/', async (req, res) => {
     const tree = req.body;
@@ -28,12 +30,11 @@ router.post('/', async (req, res) => {
         })
             .then(console.log(req.body))
             .then(res.status(200).redirect('/'))
-        // await treeCard.save();
-        // res.status(201).send(treeCard)
     } catch (error) {
         res.status(500).send(error)
     }
 })
+
 // add event to tree
 router.post('/:treeid/:eventid', async (req, res) => {
     const newEvent =  new Event(req.body)
@@ -45,6 +46,7 @@ router.post('/:treeid/:eventid', async (req, res) => {
     }
 })
 // EDIT ROUTES
+
 // edit tree by id
 router.patch('/edit/:treeid', async (req, res) => {
     try {
@@ -57,6 +59,7 @@ router.patch('/edit/:treeid', async (req, res) => {
         res.status(500).send(error)
     }
 })
+
 // edit event by id
 router.patch('/edit/:treeid/:eventid', async (req, res) => {
     try {
@@ -71,6 +74,7 @@ router.patch('/edit/:treeid/:eventid', async (req, res) => {
 
 })
 // DELETE ROUTES
+
 // delete tree by id
 router.delete('/delete-tree/:treeid', async (req, res) => {
     try {
@@ -83,6 +87,7 @@ router.delete('/delete-tree/:treeid', async (req, res) => {
         res.status(500).send(error);
     }
 })
+
 // delete event by id
 router.delete('/delete-tree/:treeid/:eventid', async (req, res) => {
     try {
