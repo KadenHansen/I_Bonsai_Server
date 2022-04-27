@@ -36,11 +36,18 @@ router.post('/', async (req, res) => {
 })
 
 // add event to tree
-router.post('/:treeid/:eventid', async (req, res) => {
-    const newEvent =  new Event(req.body)
+router.post('/:treeId/event', async (req, res) => {
+    const tree = await db.Tree.findById(req.params.treeId)
     try {
-        await newEvent.save()
-        res.status(201).send(newEvent)
+        let event = await db.Event.create({
+            Description: `${req.body.Description}`, 
+            DatePotted: `${req.body.DatePotted}`, 
+            Image: `${req.body.Image}`,
+            Notes: `${req.body.Notes}` 
+        })
+            .then(tree.Events.push(event._id))
+            .then(await tree.save())
+            .then(res.status(201).redirect('/'))
     } catch (error) {
         req.status(500).send(error)
     }
