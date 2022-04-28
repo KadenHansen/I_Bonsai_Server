@@ -19,17 +19,18 @@ router.get('/:treeId', async (req, res) => {
 // add tree card
 router.post('/', async (req, res) => {
     const tree = req.body;
-   
-    try { 
+
+    try {
         await db.Tree.create({
-            Name: `${req.body.Name}`,   
+            Name: `${req.body.Name}`,
             Age: `${req.body.Age}`,
             Species: `${req.body.Species}`,
             Style: `${req.body.Style}`,
+            Image: `${req.body.Image}`,
             Events: []
         })
             .then(console.log(req.body))
-            .then(res.status(200).redirect('/'))
+            .then(res.status(200).redirect('/inventory'))
     } catch (error) {
         res.status(500).send(error)
     }
@@ -40,10 +41,10 @@ router.post('/:treeId/event', async (req, res) => {
     const tree = await db.Tree.findById(req.params.treeId)
     try {
         let event = await db.Event.create({
-            Description: `${req.body.Description}`, 
-            DatePotted: `${req.body.DatePotted}`, 
+            Description: `${req.body.Description}`,
+            DatePotted: `${req.body.DatePotted}`,
             Image: `${req.body.Image}`,
-            Notes: `${req.body.Notes}` 
+            Notes: `${req.body.Notes}`
         })
             .then(tree.Events.push(event._id))
             .then(await tree.save())
@@ -55,20 +56,22 @@ router.post('/:treeId/event', async (req, res) => {
 // EDIT ROUTES
 
 // edit tree by id
-router.patch('/edit/:treeid', async (req, res) => {
+router.patch('/:treeId/edit', async (req, res) => {
     try {
-        const tree = await db.Tree.findByIdAndUpdate(req.params.treeid, req.body, {new: true})
-        if(!tree){
+        await db.Tree.findByIdAndUpdate(req.params.treeid, req.body, { new: true })
+            .then(
+                res.status(200).redirect('/inventory/:treeId')
+            )
+        if (!tree) {
             return res.status(404)
-        }
-        res.status(200).send(tree)
+        }        
     } catch (error) {
         res.status(500).send(error)
     }
 })
 
 // edit event by id
-router.patch('/edit/:treeid/:eventid', async (req, res) => {
+router.patch('/:treeId/:eventId/edit', async (req, res) => {
     try {
         const event = await Event.findByIdAndUpdate(req.params.eventid, req.body, { new: true })
         if (!event) {
@@ -83,7 +86,7 @@ router.patch('/edit/:treeid/:eventid', async (req, res) => {
 // DELETE ROUTES
 
 // delete tree by id
-router.delete('/delete-tree/:treeid', async (req, res) => {
+router.delete('/:treeId/delete', async (req, res) => {
     try {
         const tree = await db.Tree.findByIdAndDelete(req.params.id);
         if (!tree) {
@@ -96,7 +99,7 @@ router.delete('/delete-tree/:treeid', async (req, res) => {
 })
 
 // delete event by id
-router.delete('/delete-tree/:treeid/:eventid', async (req, res) => {
+router.delete('/:treeId/:eventId/delete', async (req, res) => {
     try {
         const event = await db.Event.findByIdAndDelete(req.params.id)
         if (!event) {
