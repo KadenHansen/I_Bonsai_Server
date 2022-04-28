@@ -18,8 +18,6 @@ router.get('/:treeId', async (req, res) => {
 
 // add tree card
 router.post('/', async (req, res) => {
-    const tree = req.body;
-
     try {
         await db.Tree.create({
             Name: `${req.body.Name}`,
@@ -58,15 +56,11 @@ router.post('/:treeId/event', async (req, res) => {
 // edit tree by id
 router.patch('/:treeId/edit', async (req, res) => {
     try {
-        await db.Tree.findByIdAndUpdate(req.params.treeId, req.body, { new: true })
-            .then(
-                res.status(200).redirect(`/inventory/${req.params.treeId}`)
-            )
-        if (!tree) {
-            return res.status(404)
-        }        
+        await db.Tree.findByIdAndUpdate(req.params.treeId, req.body)
+        // NEEDS REDIRECT
     } catch (error) {
         res.status(500).send(error)
+        console.log(error)
     }
 })
 
