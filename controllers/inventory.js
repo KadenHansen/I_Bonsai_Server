@@ -80,19 +80,18 @@ router.patch('/:treeId/edit/:eventId', async (req, res) => {
 
 })
 // DELETE ROUTES
-
 // delete tree by id
 router.delete('/:treeId/delete', async (req, res) => {
-    try {
-        const tree = await db.Tree.findByIdAndDelete(req.params.id);
-        if (!tree) {
-            return res.status(404).send();
-        }
-        res.send(tree);
-    } catch (error) {
-        res.status(500).send(error);
+    let tree = req.body
+    try{
+        await db.Tree.findByIdAndDelete(req.params.treeId, tree)
+        .then(res.json({ redirect: '/Inventory' }))
+    } catch(error) {
+        res.status(500).send(error)
+        console.log(error)
     }
 })
+
 
 // delete event by id
 router.delete('/:treeId/delete/:eventId', async (req, res) => {
