@@ -1,4 +1,5 @@
 const router = require('express').Router()
+const { redirect } = require('express/lib/response')
 const db = require('../models')
 
 // SHOW ROUTES
@@ -55,9 +56,10 @@ router.post('/:treeId/event', async (req, res) => {
 
 // edit tree by id
 router.patch('/:treeId/edit', async (req, res) => {
+    let tree = req.body
     try {
-        await db.Tree.findByIdAndUpdate(req.params.treeId, req.body)
-        // NEEDS REDIRECT
+        await db.Tree.findByIdAndUpdate(req.params.treeId, tree)
+        .then(res.json({ redirect: '/Inventory' }))
     } catch (error) {
         res.status(500).send(error)
         console.log(error)
