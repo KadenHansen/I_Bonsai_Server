@@ -2,7 +2,7 @@ const router = require('express').Router()
 const { redirect } = require('express/lib/response')
 const db = require('../models')
 
-// SHOW ROUTES
+////// SHOW ROUTES //////
 
 // show all trees
 router.get('/', async (req, res) => {
@@ -15,7 +15,8 @@ router.get('/:treeId', async (req, res) => {
     const trees = await db.Tree.findById(req.params.treeId)
     res.json(trees)
 })
-// POST ROUTES
+
+////// POST ROUTES //////
 
 // add tree card
 router.post('/', async (req, res) => {
@@ -52,7 +53,8 @@ router.post('/:treeId/event', async (req, res) => {
         req.status(500).send(error)
     }
 })
-// EDIT ROUTES
+
+////// EDIT ROUTES //////
 
 // edit tree by id
 router.patch('/:treeId/edit', async (req, res) => {
@@ -79,7 +81,9 @@ router.patch('/:treeId/edit/:eventId', async (req, res) => {
     }
 
 })
-// DELETE ROUTES
+
+////// DELETE ROUTES //////
+
 // delete tree by id
 router.delete('/:treeId/delete', async (req, res) => {
     let tree = req.body
