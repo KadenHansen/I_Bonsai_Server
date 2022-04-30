@@ -9,8 +9,10 @@ router.get('/', async (req, res) => {
     try{
         const trees = await db.Tree.find({})
         res.json(trees)
+        res.send('route complete')
 
     } catch (error) {
+        res.send(`error: ${error}`)
         res.status(500).send(error)
     }
 })
