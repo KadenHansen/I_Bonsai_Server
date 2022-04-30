@@ -9,6 +9,11 @@ require('dotenv').config()
 app.use(express.json())
 app.use(express.urlencoded({extended: true}))
 app.use(bodyParser.urlencoded({extended: true}))
+const corsOptions = {
+   origin:'*', 
+}
+
+app.use(cors(corsOptions))
 app.use(cors())
 
 
