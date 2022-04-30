@@ -6,8 +6,15 @@ const db = require('../models')
 
 // show all trees
 router.get('/', async (req, res) => {
-    const trees = await db.Tree.find({})
-    res.json(trees)
+    try{
+        const trees = await db.Tree.find({})
+        res.json(trees)
+        res.send('route complete')
+
+    } catch (error) {
+        res.send(`error: ${error}`)
+        res.status(500).send(error)
+    }
 })
 
 //  show tree by id
