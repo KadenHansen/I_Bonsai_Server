@@ -20,6 +20,8 @@ app.get('/', (req, res) => {
 app.use("/inventory", require("./controllers/inventory"))
 
 // LISTEN
-app.listen(process.env.PORT, () => {
-    console.log(`Listening on port ${process.env.PORT}`)
-})  
+let port = process.env.PORT
+if (port == null || port == "") {
+    port = 8000
+}
+app.listen(port)  
